@@ -3,7 +3,7 @@ import pytest
 import pytest_asyncio
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-from sqlalchemy.engine import url as sa_url
+from sqlalchemy.engine.url import URL
 
 from config import settings
 from main import app
@@ -29,7 +29,7 @@ async def init_db():
     async with session_maker.begin() as session:
         await session.execute(text(f"CREATE DATABASE {TEST_DB}"))
     dsn_dict["database"] = TEST_DB
-    dsn = sa_url.URL("postgresql+asyncpg", **dsn_dict)
+    dsn = URL("postgresql+asyncpg", **dsn_dict)
     await db.setup(dsn)
 
 
@@ -50,6 +50,6 @@ def get_session_maker():
         password=settings.POSTGRES_PASSWORD,
         query={},
     )
-    dsn = sa_url.URL("postgresql+asyncpg", **dsn_dict)
+    dsn = URL("postgresql+asyncpg", **dsn_dict)
     engine = create_async_engine(dsn, isolation_level="AUTOCOMMIT")
     return async_sessionmaker(engine), dsn_dict

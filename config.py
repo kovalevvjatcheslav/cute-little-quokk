@@ -9,7 +9,8 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = Field("quokk_db", env="POSTGRES_DB")
     POSTGRES_USER: str = Field("user", env="POSTGRES_USER")
     POSTGRES_PASSWORD: str = Field("very_strong_password", env="POSTGRES_PASSWORD")
-    PG_APPLICATION_NAME: str = Field("cute_little_quokk", env="PG_APPLICATION_NAME")
+
+    SECRET: str = Field("top_secret", env="SECRET")
 
 
 settings = Settings()
